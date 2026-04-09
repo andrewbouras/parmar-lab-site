@@ -114,11 +114,19 @@ app.innerHTML = `
         </span>
       </a>
 
-      <nav class="main-nav" aria-label="Primary">
-        ${renderNavLinks()}
-      </nav>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-navigation"
+      >
+        Menu
+      </button>
 
-      <a class="header-cta" href="#contact">Contact</a>
+      <nav id="site-navigation" class="main-nav" aria-label="Primary">
+        ${renderNavLinks()}
+        <a class="header-cta" href="#contact">Contact</a>
+      </nav>
     </header>
 
     <main id="top">
@@ -196,3 +204,39 @@ app.innerHTML = `
     </footer>
   </div>
 `;
+
+const masthead = app.querySelector(".masthead");
+const menuToggle = app.querySelector(".menu-toggle");
+const mobileNavLinks = app.querySelectorAll(".main-nav a");
+
+const closeMobileMenu = () => {
+  if (!masthead || !menuToggle) {
+    return;
+  }
+
+  masthead.classList.remove("is-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.textContent = "Menu";
+};
+
+if (masthead && menuToggle) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = masthead.classList.toggle("is-open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.textContent = isOpen ? "Close" : "Menu";
+  });
+
+  mobileNavLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 820) {
+        closeMobileMenu();
+      }
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 820) {
+      closeMobileMenu();
+    }
+  });
+}

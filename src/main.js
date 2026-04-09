@@ -16,8 +16,8 @@ const getLinkAttrs = (href) =>
 const renderNavLinks = () =>
   siteContent.nav.map((item) => `<a href="${item.href}">${item.label}</a>`).join("");
 
-const renderHighlights = () =>
-  siteContent.highlights
+const renderSignals = () =>
+  siteContent.hero.signals
     .map(
       (item) => `
         <li>
@@ -28,39 +28,40 @@ const renderHighlights = () =>
     )
     .join("");
 
-const renderStats = () =>
-  siteContent.stats
+const renderStoryCards = () =>
+  siteContent.stories.cards
     .map(
-      (item) => `
-        <article class="stat-card">
-          <strong>${item.value}</strong>
-          <span>${item.label}</span>
+      (card, index) => `
+        <article class="story-card story-card-${index + 1}">
+          <div class="story-visual">
+            <span>${card.tag}</span>
+          </div>
+          <div class="story-copy">
+            <h3>${card.title}</h3>
+            <p>${card.body}</p>
+          </div>
         </article>
       `
     )
     .join("");
 
-const renderFocusCards = () =>
-  siteContent.focus.cards
+const renderFeatureLinks = () =>
+  siteContent.feature.links
     .map(
-      (card) => `
-        <article class="focus-card">
-          <h3>${card.title}</h3>
-          <p>${card.body}</p>
-        </article>
+      (link) => `
+        <a href="${link.href}" ${getLinkAttrs(link.href)}>${link.label}</a>
       `
     )
     .join("");
 
-const renderWork = () =>
-  siteContent.work.items
+const renderPublications = () =>
+  siteContent.feature.publications
     .map(
       (item) => `
-        <article class="work-card">
+        <article class="publication-card">
           <p class="card-meta">${item.meta}</p>
           <h3>${item.title}</h3>
-          <p>${item.summary}</p>
-          <a href="${item.href}" target="_blank" rel="noreferrer">View publication</a>
+          <a href="${item.href}" ${getLinkAttrs(item.href)}>View publication</a>
         </article>
       `
     )
@@ -143,37 +144,57 @@ app.innerHTML = `
               ${siteContent.hero.secondaryCta.label}
             </a>
           </div>
-          <div class="stats-row">
-            ${renderStats()}
-          </div>
         </div>
 
-        <aside class="hero-panel">
-          <p class="card-meta">At a glance</p>
-          <h2>Focused science. Clear priorities. Strong mentorship.</h2>
-          <ul class="highlight-list">
-            ${renderHighlights()}
-          </ul>
+        <aside class="hero-media">
+          <div class="hero-orbit" aria-hidden="true">
+            <span class="orbit-ring orbit-ring-one"></span>
+            <span class="orbit-ring orbit-ring-two"></span>
+            <span class="orbit-ring orbit-ring-three"></span>
+            <span class="orbit-node orbit-node-one"></span>
+            <span class="orbit-node orbit-node-two"></span>
+            <span class="orbit-node orbit-node-three"></span>
+          </div>
+
+          <div class="hero-media-copy">
+            <p class="card-meta">At a glance</p>
+            <p class="media-caption">${siteContent.hero.caption}</p>
+            <ul class="signal-list">
+              ${renderSignals()}
+            </ul>
+          </div>
         </aside>
       </section>
 
-      <section id="focus" class="section-block">
-        <div class="section-heading">
-          <p class="eyebrow">${siteContent.focus.label}</p>
-          <h2>${siteContent.focus.title}</h2>
-        </div>
-        <div class="focus-grid">
-          ${renderFocusCards()}
+      <section id="overview" class="statement-section">
+        <p class="eyebrow">${siteContent.overview.label}</p>
+        <div class="statement-copy">
+          <h2>${siteContent.overview.title}</h2>
+          <p>${siteContent.overview.body}</p>
         </div>
       </section>
 
-      <section id="work" class="section-block">
+      <section id="stories" class="section-block">
         <div class="section-heading">
-          <p class="eyebrow">${siteContent.work.label}</p>
-          <h2>${siteContent.work.title}</h2>
+          <p class="eyebrow">${siteContent.stories.label}</p>
+          <h2>${siteContent.stories.title}</h2>
         </div>
-        <div class="work-grid">
-          ${renderWork()}
+        <div class="story-grid">
+          ${renderStoryCards()}
+        </div>
+      </section>
+
+      <section class="feature-section">
+        <div class="feature-copy">
+          <p class="eyebrow">${siteContent.feature.label}</p>
+          <h2>${siteContent.feature.title}</h2>
+          <p>${siteContent.feature.body}</p>
+          <div class="feature-links">
+            ${renderFeatureLinks()}
+          </div>
+        </div>
+        <div class="publication-grid">
+          ${renderPublications()}
         </div>
       </section>
 
@@ -187,15 +208,21 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section id="contact" class="contact-block">
-        <div class="section-heading">
+      <section id="contact" class="contact-section">
+        <div class="contact-copy">
           <p class="eyebrow">${siteContent.contact.label}</p>
           <h2>${siteContent.contact.title}</h2>
+          <p>${siteContent.contact.body}</p>
+          <ul class="contact-list">
+            ${renderContact()}
+          </ul>
         </div>
-        <p class="contact-copy">${siteContent.contact.body}</p>
-        <ul class="contact-list">
-          ${renderContact()}
-        </ul>
+
+        <aside class="contact-note">
+          <p class="card-meta">Institutional home</p>
+          <h3>${siteContent.contact.note.title}</h3>
+          <p>${siteContent.contact.note.body}</p>
+        </aside>
       </section>
     </main>
 

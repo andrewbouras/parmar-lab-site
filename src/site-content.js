@@ -1,14 +1,16 @@
+const media = (fileName) => `${import.meta.env.BASE_URL}media/${fileName}`;
+
 export const siteContent = {
   meta: {
     title: "Parmar Lab | Nova Southeastern University",
     description:
-      "The Parmar Lab at Nova Southeastern University's Dr. Kiran C. Patel College of Osteopathic Medicine focuses on neurodegeneration, neuroinflammation, and translational therapeutics."
+      "The Parmar Lab at Nova Southeastern University studies neurodegeneration, neuroinflammation, and translational therapeutics."
   },
   brand: {
     name: "Parmar Lab",
-    subtitle: "Nova Southeastern University"
+    subtitle: "NSU KPCOM"
   },
-  tabs: [
+  nav: [
     { id: "welcome", label: "Welcome" },
     { id: "research-focus", label: "Research Focus" },
     { id: "people", label: "People" },
@@ -16,169 +18,157 @@ export const siteContent = {
     { id: "publications", label: "Publications" },
     { id: "extracurricular", label: "Extracurricular" }
   ],
-  welcome: {
+  hero: {
     eyebrow:
-      "Dr. Kiran C. Patel College of Osteopathic Medicine | Department of Basic Sciences",
-    title: "A cleaner, more focused home for the lab.",
+      "The Parmar Lab | Nova Southeastern University | Kiran C. Patel College of Osteopathic Medicine",
+    title: ["Neurodegeneration", "and translational", "neuroscience"],
     summary:
-      "The Parmar Lab studies neurodegeneration, neuroinflammation, and translational therapeutics with a strong emphasis on student scholarship and clinically relevant science.",
+      "Faculty-led research on neuroinflammation, therapeutics, and clinically relevant brain science.",
     ctas: [
-      { label: "Research focus", target: "research-focus" },
-      { label: "Meet the people", target: "people" }
+      { label: "View research focus", href: "#research-focus" },
+      { label: "Meet the lab", href: "#people" }
+    ],
+    metrics: [
+      { label: "Focus", value: "Neurodegeneration" },
+      { label: "Focus", value: "Neuroinflammation" },
+      { label: "Method", value: "Translational therapeutics" }
     ],
     collage: [
-      {
-        src: "/media/brain-mri.jpg",
-        alt: "Brain MRI image"
-      },
-      {
-        src: "/media/mouse-neurons.jpg",
-        alt: "Neuron microscopy image"
-      },
-      {
-        src: "/media/microscopes.jpg",
-        alt: "Researchers working with microscopes"
-      },
-      {
-        src: "/media/pain-neurons.jpg",
-        alt: "Neural research microscopy image"
-      }
+      { src: media("microscopes.jpg"), alt: "Researchers using microscopes" },
+      { src: media("mouse-neurons.jpg"), alt: "Neuron microscopy image" },
+      { src: media("brain-mri.jpg"), alt: "Magnetic resonance image of the brain" },
+      { src: media("pain-neurons.jpg"), alt: "Microscopy image of neural tissue" }
     ],
-    stats: [
-      { value: "80+", label: "publications" },
-      { value: "2,200+", label: "citations" },
-      { value: "15+", label: "student mentees yearly" }
-    ],
-    signals: [
-      {
-        label: "Primary focus",
-        value: "Neurodegeneration and neuroinflammation"
-      },
-      {
-        label: "Approach",
-        value: "Mechanism-led and translational"
-      },
-      {
-        label: "Environment",
-        value: "Faculty leadership with student authorship"
-      }
-    ],
-    mediaCredit: "Public-domain scientific imagery via Wikimedia Commons and NIH sources."
+    credit: "Concept collage built from public-domain scientific imagery."
+  },
+  welcome: {
+    eyebrow: "Welcome",
+    title: "Clean science. Clear direction.",
+    body:
+      "This concept reframes the lab as a modern research home: visually confident, easy to scan, and anchored in a few strong takeaways instead of dense copy."
   },
   researchFocus: {
     eyebrow: "Research Focus",
-    title: "Three themes organize the lab's public identity.",
-    intro:
-      "This section should help a visitor understand the lab in under a minute.",
-    cards: [
+    title: "Four directions shape the story of the lab.",
+    summary:
+      "The public-facing identity should immediately communicate where the work lives and why it matters.",
+    stories: [
       {
-        title: "Neurodegeneration",
-        body:
-          "Research centered on Alzheimer's disease, Parkinson's disease, and the biological mechanisms behind progression."
+        title: "Parkinson's disease",
+        body: "Gene therapy, translation, and future direction.",
+        image: media("brain-mri.jpg"),
+        href:
+          "https://scholars.nova.edu/en/publications/gene-therapy-for-parkinsons-disease-current-landscape-translation/"
       },
       {
         title: "Neuroinflammation",
-        body:
-          "Work focused on inflammatory pathways and their role in disease burden, progression, and therapeutic opportunity."
+        body: "Inflammatory pathways as therapeutic targets.",
+        image: media("pain-neurons.jpg"),
+        href:
+          "https://scholars.nova.edu/en/publications/targeting-neuroinflammation-in-neurodegenerative-disorders-the-em/"
       },
       {
-        title: "Therapeutic Strategy",
-        body:
-          "A translational lens on treatment evaluation, emerging interventions, and clinically meaningful direction."
+        title: "Alzheimer's disease",
+        body: "Disease progression viewed through mechanistic questions.",
+        image: media("mouse-neurons.jpg"),
+        href: "https://scholars.nova.edu/en/persons/mayur-parmar"
+      },
+      {
+        title: "Student scholarship",
+        body: "Publication-minded mentorship and review writing.",
+        image: media("microscopes.jpg"),
+        href: "https://osteopathic.nova.edu/documents/publications/kpcom-link-fall-2025.pdf"
       }
     ],
-    strip: [
-      "Disease-focused questions",
-      "Mechanistic interpretation",
-      "Therapeutic relevance"
-    ]
+    highlight: {
+      eyebrow: "Project Highlight",
+      title: "Parkinson's disease gene therapy",
+      body:
+        "A recent review maps the current landscape, translational hurdles, and future directions of gene therapy in Parkinson's disease.",
+      href:
+        "https://scholars.nova.edu/en/publications/gene-therapy-for-parkinsons-disease-current-landscape-translation/",
+      image: media("brain-mri.jpg"),
+      label: "Read the review"
+    }
   },
   people: {
     eyebrow: "People",
-    title: "Faculty leadership and student-driven momentum.",
-    intro:
-      "The site should present the lab as both scientifically serious and mentorship-oriented.",
+    title: "Faculty-led work with room for student authorship.",
+    summary:
+      "The lab should feel both academically serious and visibly mentorship-oriented.",
+    lead: {
+      name: "Mayur Parmar, Ph.D.",
+      role: "Associate Professor of Pharmacology",
+      body:
+        "Dr. Parmar leads the lab's work across neuroscience, pharmacology, and translational therapeutics at NSU KPCOM.",
+      links: [
+        {
+          label: "Faculty profile",
+          href: "https://osteopathic.nova.edu/people/parmar-mayur.html"
+        },
+        {
+          label: "NSU Scholars",
+          href: "https://scholars.nova.edu/en/persons/mayur-parmar"
+        }
+      ]
+    },
     cards: [
       {
-        name: "Mayur Parmar, Ph.D.",
-        role: "Associate Professor of Pharmacology",
+        title: "Vito Evola",
+        meta: "Predoctoral Research Fellow",
         body:
-          "Dr. Parmar leads the lab's work across neuroscience, pharmacology, and translational therapeutics at NSU KPCOM.",
-        links: [
-          {
-            label: "Faculty profile",
-            href: "https://osteopathic.nova.edu/people/parmar-mayur.html"
-          },
-          {
-            label: "NSU Scholars",
-            href: "https://scholars.nova.edu/en/persons/mayur-parmar"
-          }
-        ]
+          "Recent scholarship and student-facing research momentum are part of the lab's public identity.",
+        link: {
+          label: "KPCOM feature",
+          href: "https://osteopathic.nova.edu/documents/publications/kpcom-link-fall-2025.pdf"
+        }
       },
       {
-        name: "Vito Evola",
-        role: "Predoctoral Research Fellow",
+        title: "Lab environment",
+        meta: "Mentorship-first culture",
         body:
-          "Vito contributes to recent lab scholarship in neurodegeneration and translational neuroscience.",
-        links: [
-          {
-            label: "Recent review",
-            href:
-              "https://scholars.nova.edu/en/publications/gene-therapy-for-parkinsons-disease-current-landscape-translation/"
-          }
-        ]
-      },
-      {
-        name: "Lab Direction",
-        role: "Mentorship and publication",
-        body:
-          "The public-facing identity of the lab should reflect both scientific focus and the mentorship pipeline behind the work.",
-        links: [
-          {
-            label: "KPCOM",
-            href: "https://osteopathic.nova.edu/index.html"
-          }
-        ]
+          "The site should present a lab where publication, advising, and professional growth are visible parts of the work.",
+        link: {
+          label: "About NSU KPCOM",
+          href: "https://osteopathic.nova.edu/index.html"
+        }
       }
     ]
   },
   labNews: {
     eyebrow: "Lab News",
-    title: "A place for recent momentum and updates.",
-    intro:
-      "For now, this page can highlight recent scholarship and visible lab milestones until a fuller news archive exists.",
+    title: "Recent movement from the lab.",
+    summary:
+      "Short, current, and easy to share. This section should read like momentum, not archive.",
+    image: media("microscopes.jpg"),
     items: [
       {
         meta: "2026",
         title: "Parkinson's gene therapy review published",
-        body:
-          "Recent scholarship explores the translational landscape, current challenges, and future direction of gene therapy in Parkinson's disease.",
+        body: "A focused review outlines major translational challenges and next steps.",
         href:
           "https://scholars.nova.edu/en/publications/gene-therapy-for-parkinsons-disease-current-landscape-translation/"
       },
       {
         meta: "2026",
-        title: "Neuroinflammation review highlights semaglutide",
-        body:
-          "A focused review examines neuroinflammation across neurodegenerative disorders and the possible therapeutic role of semaglutide.",
+        title: "Semaglutide review highlights neuroinflammation",
+        body: "Recent work examines inflammation across neurodegenerative disorders.",
         href:
           "https://scholars.nova.edu/en/publications/targeting-neuroinflammation-in-neurodegenerative-disorders-the-em/"
       },
       {
         meta: "KPCOM",
-        title: "Predoctoral research fellowship spotlight",
-        body:
-          "Vito Evola's work and research trajectory were profiled in KPCOM's publication, reinforcing the lab's student-centered scholarly direction.",
-        href:
-          "https://osteopathic.nova.edu/documents/publications/kpcom-link-fall-2025.pdf"
+        title: "Predoctoral fellowship spotlight",
+        body: "A public-facing profile reinforces the lab's student-centered research culture.",
+        href: "https://osteopathic.nova.edu/documents/publications/kpcom-link-fall-2025.pdf"
       }
     ]
   },
   publications: {
     eyebrow: "Publications",
-    title: "Selected publications and institutional links.",
-    intro:
-      "This page is designed to expand later, but already works as a polished entry point for featured scholarship.",
+    title: "Selected work and scholarship links.",
+    summary:
+      "A short featured list keeps the site clean while still giving visitors credible research touchpoints.",
     items: [
       {
         meta: "Expert Review of Neurotherapeutics | 2026",
@@ -203,27 +193,43 @@ export const siteContent = {
   },
   extracurricular: {
     eyebrow: "Extracurricular",
-    title: "A flexible page for the life of the lab beyond core papers.",
-    intro:
-      "This section can hold outreach, student achievements, presentations, events, conferences, or broader lab culture.",
+    title: "Space for what happens beyond the paper.",
+    summary:
+      "This section can hold the broader life of the lab without cluttering the scientific core of the site.",
     cards: [
       {
         title: "Mentorship",
-        body:
-          "A place to showcase student guidance, fellowships, advising, and scholarly development."
+        body: "Student advising, fellowships, and authorship pathways."
       },
       {
-        title: "Events",
-        body:
-          "A place for talks, conference appearances, campus presentations, and invited lectures."
+        title: "Conference presence",
+        body: "Talks, posters, invited lectures, and regional or national meetings."
       },
       {
-        title: "Lab Life",
-        body:
-          "A place for community-facing moments, extracurricular activity, and the human side of the group."
+        title: "Campus engagement",
+        body: "Events, outreach, and the visible culture surrounding the group."
       }
     ]
   },
-  footer:
-    "Parmar Lab | Nova Southeastern University | Dr. Kiran C. Patel College of Osteopathic Medicine"
+  footer: {
+    institution: "Nova Southeastern University | Dr. Kiran C. Patel College of Osteopathic Medicine",
+    body:
+      "For collaborations and inquiries, use Dr. Parmar's faculty profile or NSU Scholars page.",
+    quickLinks: [
+      { label: "Research Focus", href: "#research-focus" },
+      { label: "People", href: "#people" },
+      { label: "Lab News", href: "#lab-news" },
+      { label: "Publications", href: "#publications" }
+    ],
+    links: [
+      {
+        label: "Faculty profile",
+        href: "https://osteopathic.nova.edu/people/parmar-mayur.html"
+      },
+      {
+        label: "NSU Scholars",
+        href: "https://scholars.nova.edu/en/persons/mayur-parmar"
+      }
+    ]
+  }
 };

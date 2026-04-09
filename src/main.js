@@ -92,7 +92,16 @@ const renderPeopleCards = () =>
   siteContent.people.cards
     .map(
       (card) => `
-        <article class="info-card">
+        <article class="info-card ${card.image ? "has-photo" : ""}">
+          ${
+            card.image
+              ? `
+                <figure class="card-photo">
+                  <img src="${card.image}" alt="${card.imageAlt || card.title}" />
+                </figure>
+              `
+              : ""
+          }
           <p class="eyebrow">${card.meta}</p>
           <h3>${card.title}</h3>
           <p>${card.body}</p>
@@ -259,12 +268,21 @@ app.innerHTML = `
             <p class="eyebrow">${siteContent.people.eyebrow}</p>
             <h2>${siteContent.people.title}</h2>
             <p class="section-summary">${siteContent.people.summary}</p>
-            <div class="lead-detail">
-              <p class="person-role">${siteContent.people.lead.role}</p>
-              <h3>${siteContent.people.lead.name}</h3>
-              <p>${siteContent.people.lead.body}</p>
-              <div class="inline-link-row">
-                ${renderLeadLinks()}
+            <div class="lead-spotlight">
+              <figure class="lead-photo">
+                <img
+                  src="${siteContent.people.lead.image}"
+                  alt="${siteContent.people.lead.imageAlt || siteContent.people.lead.name}"
+                />
+              </figure>
+
+              <div class="lead-detail">
+                <p class="person-role">${siteContent.people.lead.role}</p>
+                <h3>${siteContent.people.lead.name}</h3>
+                <p>${siteContent.people.lead.body}</p>
+                <div class="inline-link-row">
+                  ${renderLeadLinks()}
+                </div>
               </div>
             </div>
           </article>

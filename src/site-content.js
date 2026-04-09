@@ -99,6 +99,8 @@ export const siteContent = {
     lead: {
       name: "Mayur Parmar, Ph.D.",
       role: "Associate Professor of Pharmacology",
+      image: media("parmar-headshot.jpeg"),
+      imageAlt: "Portrait of Dr. Mayur Parmar",
       body:
         "Dr. Parmar leads the lab's work across neuroscience, pharmacology, and translational therapeutics at NSU KPCOM.",
       links: [
@@ -116,6 +118,8 @@ export const siteContent = {
       {
         title: "Vito Evola",
         meta: "Predoctoral Research Fellow",
+        image: media("vito-headshot.jpeg"),
+        imageAlt: "Portrait of Vito Evola",
         body:
           "Recent scholarship and student-facing research momentum are part of the lab's public identity.",
         link: {

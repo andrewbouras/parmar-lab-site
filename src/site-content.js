@@ -56,27 +56,23 @@ export const siteContent = {
       {
         title: "Parkinson's disease",
         body: "Gene therapy, translation, and future direction.",
-        image: media("brain-mri.jpg"),
         href:
           "https://scholars.nova.edu/en/publications/gene-therapy-for-parkinsons-disease-current-landscape-translation/"
       },
       {
         title: "Neuroinflammation",
         body: "Inflammatory pathways as therapeutic targets.",
-        image: media("pain-neurons.jpg"),
         href:
           "https://scholars.nova.edu/en/publications/targeting-neuroinflammation-in-neurodegenerative-disorders-the-em/"
       },
       {
         title: "Alzheimer's disease",
         body: "Disease progression viewed through mechanistic questions.",
-        image: media("mouse-neurons.jpg"),
         href: "https://scholars.nova.edu/en/persons/mayur-parmar"
       },
       {
         title: "Student scholarship",
         body: "Publication-minded mentorship and review writing.",
-        image: media("microscopes.jpg"),
         href: "https://osteopathic.nova.edu/documents/publications/kpcom-link-fall-2025.pdf"
       }
     ],
@@ -87,7 +83,11 @@ export const siteContent = {
         "A recent review maps the current landscape, translational hurdles, and future directions of gene therapy in Parkinson's disease.",
       href:
         "https://scholars.nova.edu/en/publications/gene-therapy-for-parkinsons-disease-current-landscape-translation/",
-      image: media("brain-mri.jpg"),
+      signals: [
+        "Therapeutic strategy",
+        "Translational hurdles",
+        "Future direction"
+      ],
       label: "Read the review"
     }
   },
@@ -144,7 +144,11 @@ export const siteContent = {
     title: "Recent movement from the lab.",
     summary:
       "Short, current, and easy to share. This section should read like momentum, not archive.",
-    image: media("microscopes.jpg"),
+    signals: [
+      "Recent reviews",
+      "Student spotlight",
+      "Research momentum"
+    ],
     items: [
       {
         meta: "2026",

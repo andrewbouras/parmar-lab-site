@@ -65,14 +65,23 @@ const renderHeroCollage = () =>
 const renderStoryCards = () =>
   siteContent.researchFocus.stories
     .map(
-      (story) => `
-        <a class="story-card" href="${story.href}" ${getLinkAttrs(story.href)}>
-          <img src="${story.image}" alt="${story.title}" />
+      (story, index) => `
+        <a class="story-card story-card-${index + 1}" href="${story.href}" ${getLinkAttrs(story.href)}>
+          <div class="story-surface" aria-hidden="true"></div>
           <div class="story-overlay">
             <p>${story.body}</p>
             <h3>${story.title}</h3>
           </div>
         </a>
+      `,
+    )
+    .join("");
+
+const renderFeatureSignals = () =>
+  siteContent.researchFocus.highlight.signals
+    .map(
+      (item) => `
+        <span class="feature-signal">${item}</span>
       `,
     )
     .join("");
@@ -122,6 +131,15 @@ const renderNewsItems = () =>
           <h3>${item.title}</h3>
           <p>${item.body}</p>
         </a>
+      `,
+    )
+    .join("");
+
+const renderNewsSignals = () =>
+  siteContent.labNews.signals
+    .map(
+      (item) => `
+        <span class="news-signal">${item}</span>
       `,
     )
     .join("");
@@ -239,12 +257,14 @@ app.innerHTML = `
           </div>
 
           <div class="feature-band">
-            <figure class="feature-media">
-              <img
-                src="${siteContent.researchFocus.highlight.image}"
-                alt="${siteContent.researchFocus.highlight.title}"
-              />
-            </figure>
+            <div class="feature-media" aria-hidden="true">
+              <div class="feature-orb feature-orb-one"></div>
+              <div class="feature-orb feature-orb-two"></div>
+              <div class="feature-grid-lines"></div>
+              <div class="feature-signal-stack">
+                ${renderFeatureSignals()}
+              </div>
+            </div>
 
             <div class="feature-copy">
               <p class="eyebrow">${siteContent.researchFocus.highlight.eyebrow}</p>
@@ -299,9 +319,9 @@ app.innerHTML = `
             <p class="eyebrow">${siteContent.labNews.eyebrow}</p>
             <h2>${siteContent.labNews.title}</h2>
             <p class="section-summary">${siteContent.labNews.summary}</p>
-            <figure class="news-image">
-              <img src="${siteContent.labNews.image}" alt="Research activity in the lab" />
-            </figure>
+            <div class="news-panel">
+              ${renderNewsSignals()}
+            </div>
           </div>
 
           <div class="news-list">

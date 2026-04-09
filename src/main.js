@@ -13,11 +13,27 @@ if (descriptionTag) {
 const getLinkAttrs = (href) =>
   href.startsWith("http") ? 'target="_blank" rel="noreferrer"' : "";
 
-const renderNavLinks = () =>
-  siteContent.nav.map((item) => `<a href="${item.href}">${item.label}</a>`).join("");
+const renderTabs = () =>
+  siteContent.tabs
+    .map(
+      (tab) => `
+        <button
+          class="tab-button"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-${tab.id}"
+          id="tab-${tab.id}"
+          data-tab="${tab.id}"
+        >
+          ${tab.label}
+        </button>
+      `
+    )
+    .join("");
 
-const renderSignals = () =>
-  siteContent.hero.signals
+const renderWelcomeSignals = () =>
+  siteContent.welcome.signals
     .map(
       (item) => `
         <li>
@@ -28,41 +44,57 @@ const renderSignals = () =>
     )
     .join("");
 
-const renderStoryCards = () =>
-  siteContent.stories.cards
-    .map(
-      (card, index) => `
-        <article class="story-card story-card-${index + 1}">
-          <div class="story-visual">
-            <span>${card.tag}</span>
-          </div>
-          <div class="story-copy">
-            <h3>${card.title}</h3>
-            <p>${card.body}</p>
-          </div>
-        </article>
-      `
-    )
-    .join("");
-
-const renderFeatureLinks = () =>
-  siteContent.feature.links
-    .map(
-      (link) => `
-        <a href="${link.href}" ${getLinkAttrs(link.href)}>${link.label}</a>
-      `
-    )
-    .join("");
-
-const renderPublications = () =>
-  siteContent.feature.publications
+const renderWelcomeStats = () =>
+  siteContent.welcome.stats
     .map(
       (item) => `
-        <article class="publication-card">
-          <p class="card-meta">${item.meta}</p>
-          <h3>${item.title}</h3>
-          <a href="${item.href}" ${getLinkAttrs(item.href)}>View publication</a>
+        <article class="stat-card">
+          <strong>${item.value}</strong>
+          <span>${item.label}</span>
         </article>
+      `
+    )
+    .join("");
+
+const renderWelcomeCollage = () =>
+  siteContent.welcome.collage
+    .map(
+      (item, index) => `
+        <figure class="collage-tile collage-tile-${index + 1}">
+          <img src="${item.src}" alt="${item.alt}" />
+        </figure>
+      `
+    )
+    .join("");
+
+const renderWelcomeCtas = () =>
+  siteContent.welcome.ctas
+    .map(
+      (cta, index) => `
+        <button class="button ${index === 0 ? "button-primary" : "button-secondary"}" type="button" data-tab-link="${cta.target}">
+          ${cta.label}
+        </button>
+      `
+    )
+    .join("");
+
+const renderResearchCards = () =>
+  siteContent.researchFocus.cards
+    .map(
+      (card) => `
+        <article class="content-card">
+          <h3>${card.title}</h3>
+          <p>${card.body}</p>
+        </article>
+      `
+    )
+    .join("");
+
+const renderResearchStrip = () =>
+  siteContent.researchFocus.strip
+    .map(
+      (item) => `
+        <li>${item}</li>
       `
     )
     .join("");
@@ -75,7 +107,7 @@ const renderPeople = () =>
           <p class="card-meta">${person.role}</p>
           <h3>${person.name}</h3>
           <p>${person.body}</p>
-          <div class="person-links">
+          <div class="card-links">
             ${person.links
               .map(
                 (link) => `
@@ -89,14 +121,41 @@ const renderPeople = () =>
     )
     .join("");
 
-const renderContact = () =>
-  siteContent.contact.details
+const renderNews = () =>
+  siteContent.labNews.items
     .map(
       (item) => `
-        <li>
-          <span>${item.label}</span>
-          <a href="${item.href}" ${getLinkAttrs(item.href)}>${item.value}</a>
-        </li>
+        <article class="news-card">
+          <p class="card-meta">${item.meta}</p>
+          <h3>${item.title}</h3>
+          <p>${item.body}</p>
+          <a href="${item.href}" ${getLinkAttrs(item.href)}>Open item</a>
+        </article>
+      `
+    )
+    .join("");
+
+const renderPublications = () =>
+  siteContent.publications.items
+    .map(
+      (item) => `
+        <article class="publication-card">
+          <p class="card-meta">${item.meta}</p>
+          <h3>${item.title}</h3>
+          <a href="${item.href}" ${getLinkAttrs(item.href)}>View publication</a>
+        </article>
+      `
+    )
+    .join("");
+
+const renderExtraCards = () =>
+  siteContent.extracurricular.cards
+    .map(
+      (card) => `
+        <article class="content-card">
+          <h3>${card.title}</h3>
+          <p>${card.body}</p>
+        </article>
       `
     )
     .join("");
@@ -107,163 +166,209 @@ app.innerHTML = `
     <div class="page-glow glow-right"></div>
 
     <header class="masthead">
-      <a class="brand" href="#top">
-        <span class="brand-mark">PL</span>
-        <span class="brand-copy">
-          <strong>${siteContent.brand.name}</strong>
-          <small>${siteContent.brand.subtitle}</small>
-        </span>
-      </a>
+      <div class="brand-lockup">
+        <a class="brand" href="#welcome">
+          <span class="brand-mark">PL</span>
+          <span class="brand-copy">
+            <strong>${siteContent.brand.name}</strong>
+            <small>${siteContent.brand.subtitle}</small>
+          </span>
+        </a>
+      </div>
 
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="site-navigation"
-      >
-        Menu
-      </button>
-
-      <nav id="site-navigation" class="main-nav" aria-label="Primary">
-        ${renderNavLinks()}
-        <a class="header-cta" href="#contact">Contact</a>
+      <nav class="tab-nav" role="tablist" aria-label="Site sections">
+        ${renderTabs()}
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">${siteContent.hero.eyebrow}</p>
-          <h1>${siteContent.hero.title}</h1>
-          <p class="hero-summary">${siteContent.hero.summary}</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="${siteContent.hero.primaryCta.href}">
-              ${siteContent.hero.primaryCta.label}
-            </a>
-            <a class="button button-secondary" href="${siteContent.hero.secondaryCta.href}">
-              ${siteContent.hero.secondaryCta.label}
-            </a>
-          </div>
-        </div>
-
-        <aside class="hero-media">
-          <div class="hero-orbit" aria-hidden="true">
-            <span class="orbit-ring orbit-ring-one"></span>
-            <span class="orbit-ring orbit-ring-two"></span>
-            <span class="orbit-ring orbit-ring-three"></span>
-            <span class="orbit-node orbit-node-one"></span>
-            <span class="orbit-node orbit-node-two"></span>
-            <span class="orbit-node orbit-node-three"></span>
+    <main>
+      <section
+        id="panel-welcome"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-welcome"
+      >
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <p class="eyebrow">${siteContent.welcome.eyebrow}</p>
+            <h1>${siteContent.welcome.title}</h1>
+            <p class="hero-summary">${siteContent.welcome.summary}</p>
+            <div class="hero-actions">
+              ${renderWelcomeCtas()}
+            </div>
+            <div class="stats-row">
+              ${renderWelcomeStats()}
+            </div>
           </div>
 
-          <div class="hero-media-copy">
-            <p class="card-meta">At a glance</p>
-            <p class="media-caption">${siteContent.hero.caption}</p>
-            <ul class="signal-list">
-              ${renderSignals()}
-            </ul>
-          </div>
-        </aside>
-      </section>
-
-      <section id="overview" class="statement-section">
-        <p class="eyebrow">${siteContent.overview.label}</p>
-        <div class="statement-copy">
-          <h2>${siteContent.overview.title}</h2>
-          <p>${siteContent.overview.body}</p>
+          <aside class="hero-aside">
+            <div class="media-collage">
+              ${renderWelcomeCollage()}
+            </div>
+            <div class="signal-panel">
+              <p class="card-meta">At a glance</p>
+              <ul class="signal-list">
+                ${renderWelcomeSignals()}
+              </ul>
+              <p class="media-credit">${siteContent.welcome.mediaCredit}</p>
+            </div>
+          </aside>
         </div>
       </section>
 
-      <section id="stories" class="section-block">
-        <div class="section-heading">
-          <p class="eyebrow">${siteContent.stories.label}</p>
-          <h2>${siteContent.stories.title}</h2>
+      <section
+        id="panel-research-focus"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-research-focus"
+        hidden
+      >
+        <div class="page-header">
+          <p class="eyebrow">${siteContent.researchFocus.eyebrow}</p>
+          <h2>${siteContent.researchFocus.title}</h2>
+          <p>${siteContent.researchFocus.intro}</p>
         </div>
-        <div class="story-grid">
-          ${renderStoryCards()}
+        <div class="content-grid three-up">
+          ${renderResearchCards()}
         </div>
+        <ul class="focus-strip">
+          ${renderResearchStrip()}
+        </ul>
       </section>
 
-      <section class="feature-section">
-        <div class="feature-copy">
-          <p class="eyebrow">${siteContent.feature.label}</p>
-          <h2>${siteContent.feature.title}</h2>
-          <p>${siteContent.feature.body}</p>
-          <div class="feature-links">
-            ${renderFeatureLinks()}
-          </div>
-        </div>
-        <div class="publication-grid">
-          ${renderPublications()}
-        </div>
-      </section>
-
-      <section id="people" class="section-block">
-        <div class="section-heading">
-          <p class="eyebrow">${siteContent.people.label}</p>
+      <section
+        id="panel-people"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-people"
+        hidden
+      >
+        <div class="page-header">
+          <p class="eyebrow">${siteContent.people.eyebrow}</p>
           <h2>${siteContent.people.title}</h2>
+          <p>${siteContent.people.intro}</p>
         </div>
-        <div class="people-grid">
+        <div class="content-grid three-up">
           ${renderPeople()}
         </div>
       </section>
 
-      <section id="contact" class="contact-section">
-        <div class="contact-copy">
-          <p class="eyebrow">${siteContent.contact.label}</p>
-          <h2>${siteContent.contact.title}</h2>
-          <p>${siteContent.contact.body}</p>
-          <ul class="contact-list">
-            ${renderContact()}
-          </ul>
+      <section
+        id="panel-lab-news"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-lab-news"
+        hidden
+      >
+        <div class="page-header">
+          <p class="eyebrow">${siteContent.labNews.eyebrow}</p>
+          <h2>${siteContent.labNews.title}</h2>
+          <p>${siteContent.labNews.intro}</p>
         </div>
+        <div class="content-grid news-grid">
+          ${renderNews()}
+        </div>
+      </section>
 
-        <aside class="contact-note">
-          <p class="card-meta">Institutional home</p>
-          <h3>${siteContent.contact.note.title}</h3>
-          <p>${siteContent.contact.note.body}</p>
-        </aside>
+      <section
+        id="panel-publications"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-publications"
+        hidden
+      >
+        <div class="page-header">
+          <p class="eyebrow">${siteContent.publications.eyebrow}</p>
+          <h2>${siteContent.publications.title}</h2>
+          <p>${siteContent.publications.intro}</p>
+        </div>
+        <div class="content-grid publication-grid">
+          ${renderPublications()}
+        </div>
+      </section>
+
+      <section
+        id="panel-extracurricular"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-extracurricular"
+        hidden
+      >
+        <div class="page-header">
+          <p class="eyebrow">${siteContent.extracurricular.eyebrow}</p>
+          <h2>${siteContent.extracurricular.title}</h2>
+          <p>${siteContent.extracurricular.intro}</p>
+        </div>
+        <div class="content-grid three-up">
+          ${renderExtraCards()}
+        </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>${siteContent.footer}</p>
+    <footer id="contact" class="site-footer">
+      <div class="footer-copy">
+        <p class="eyebrow">${siteContent.footer}</p>
+      </div>
+      <div class="footer-links">
+        ${siteContent.people.cards[0].links
+          .map(
+            (link) => `
+              <a href="${link.href}" ${getLinkAttrs(link.href)}>${link.label}</a>
+            `
+          )
+          .join("")}
+        ${siteContent.labNews.items[0]
+          ? `<a href="${siteContent.people.cards[0].links[0].href}" ${getLinkAttrs(siteContent.people.cards[0].links[0].href)}>Contact</a>`
+          : ""}
+      </div>
     </footer>
   </div>
 `;
 
-const masthead = app.querySelector(".masthead");
-const menuToggle = app.querySelector(".menu-toggle");
-const mobileNavLinks = app.querySelectorAll(".main-nav a");
+const tabButtons = [...app.querySelectorAll("[data-tab]")];
+const tabPanels = [...app.querySelectorAll(".tab-panel")];
+const tabLinks = [...app.querySelectorAll("[data-tab-link]")];
 
-const closeMobileMenu = () => {
-  if (!masthead || !menuToggle) {
-    return;
+const validTabs = new Set(siteContent.tabs.map((tab) => tab.id));
+
+const setActiveTab = (tabId, replace = false) => {
+  const nextTab = validTabs.has(tabId) ? tabId : siteContent.tabs[0].id;
+
+  tabButtons.forEach((button) => {
+    const isActive = button.dataset.tab === nextTab;
+    button.setAttribute("aria-selected", String(isActive));
+    button.classList.toggle("is-active", isActive);
+    button.tabIndex = isActive ? 0 : -1;
+  });
+
+  tabPanels.forEach((panel) => {
+    panel.hidden = panel.id !== `panel-${nextTab}`;
+  });
+
+  const nextHash = `#${nextTab}`;
+  if (replace) {
+    history.replaceState(null, "", nextHash);
+  } else if (window.location.hash !== nextHash) {
+    history.pushState(null, "", nextHash);
   }
-
-  masthead.classList.remove("is-open");
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.textContent = "Menu";
 };
 
-if (masthead && menuToggle) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = masthead.classList.toggle("is-open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.textContent = isOpen ? "Close" : "Menu";
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setActiveTab(button.dataset.tab);
   });
+});
 
-  mobileNavLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      if (window.innerWidth <= 820) {
-        closeMobileMenu();
-      }
-    });
+tabLinks.forEach((button) => {
+  button.addEventListener("click", () => {
+    setActiveTab(button.dataset.tabLink);
   });
+});
 
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 820) {
-      closeMobileMenu();
-    }
-  });
-}
+window.addEventListener("popstate", () => {
+  const hashTab = window.location.hash.replace("#", "");
+  setActiveTab(hashTab, true);
+});
+
+const initialTab = window.location.hash.replace("#", "");
+setActiveTab(initialTab, true);

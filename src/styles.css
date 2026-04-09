@@ -818,8 +818,10 @@ figure {
 }
 
 .card-photo {
+  width: clamp(168px, 58%, 226px);
   aspect-ratio: 4 / 4.7;
   margin-bottom: 16px;
+  box-shadow: var(--light-shadow);
 }
 
 .card-photo img {
